@@ -1,5 +1,5 @@
 {
-  "name": "vue-j",
+  "name": "jvue",
   "version": "0.0.1",
   "description": "参照 Vue 源码实现的一个 JavaScript MVVM 框架",
   "main": "index.js",
