@@ -11,6 +11,7 @@
 <body>
     <div id="test">
         <p>{{msg}}</p>
+        <p>{{key}}</p>
     </div>
     <script>
         var mark = 'data-binding'
@@ -27,8 +28,6 @@
             for (var val in bindingDatas) {
                 bind(val);
             }
-
-            console.log(bindingDatas);
 
             if (initData) {
                 for (var val in initData) {
@@ -62,7 +61,8 @@
         }
 
         var app = new jvue('test', {
-            msg: 'hello'
+            msg: 'hello',
+            key: 'wow'
         })
     </script>
 </body>

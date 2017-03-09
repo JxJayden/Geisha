@@ -19,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/JxJayden/vue-j/issues"
   },
-  "homepage": "https://github.com/JxJayden/vue-j#readme"
+  "homepage": "https://github.com/JxJayden/vue-j#readme",
+  "dependencies": {
+    "browser-sync": "^2.18.8",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-jslint": "^1.0.10",
+    "gulp-uglify": "^2.0.1"
+  }
 }
