@@ -102,7 +102,7 @@
 - update
 - pub: `each subs : dir.refresh()`
 
-# [498778e]
+## [498778e]
 > 0.3.2 - make it actually work for Browserify
 
 ```
@@ -287,13 +287,36 @@ parse filters
 
 #### ExpParser from https://github.com/RubyLouvre/avalon 
 
+## [f4861ca]
 
+#### func (main.js)
 
+- config(opts) 个人设置
 
+- directive(id, fn) 注册指令
 
+- filter(id, fn) 注册 filter 指令
 
+- component(id, Ctor) 
 
+  > 注册组件，用 util.toConstructor 转为 ViewModel(或子类)
 
+- partial(id, partial)
+
+  > 注册模板，用 utils.toFragment 转为 frag 节点
+
+- transition(id, transition)
+
+  > 注册动画 def
+
+- extend(options)
+
+  ```
+   Expose the main ViewModel class and add extend method
+   
+  ```
+
+  ​
 
 
 
