@@ -316,9 +316,97 @@ parse filters
    
   ```
 
-  ​
+- inheritOptions (child, parent, topLevel)
 
+  > 对象则 拷贝 (一层)，方法则 mergeHook，忽略 el methods
 
+- mergeHook (fn, parentFn)
 
+- updatePrefix ()
 
+- setPrefix()
+
+#### Compiler
+
+**props**
+
+- init
+- options
+- data
+- el
+- vm
+- dirs
+- exps
+- computed
+- childCompilers
+- emitter (Emitter)
+- parentCompiler
+- bindings {}
+- rootCompiler
+- childId
+- observer
+  - proxies
+- [repeatIndex]
+- $
+- $el
+- $compiler
+- $root
+
+**func**
+
+- Compiler(vm, options) 
+
+```
+compiler.init = true // indicate intiating this instance
+
+// process and extend options
+
+// copy data, methods & compiler options
+
+// initialize element
+
+// set compiler properties
+
+// inherit parent bindings
+
+// set inenumerable VM properties
+
+// set parent VM
+// and register child id on parent
+
+// setup observer
+
+// beforeCompile hook
+
+// the user might have set some props on the vm 
+// so copy it back to the data...
+
+// observe the data
+Observer.observe(data, '', compiler.observer)
+
+// for repeated items, create an index binding
+// which should be inenumerable but configurable
+
+// allow the $data object to be swapped
+
+// now parse the DOM
+	// create necessary bindings
+	// bind the parsed directives
+	
+// extract dependencies for computed properties
+
+// done! post compile / ready hook
+```
+
+- setupElement(options) 
+
+  >  Initialize the VM/Compiler's element. Fill it in with the template if necessary.
+
+- setupObserver
+
+  > Setup observer.The observer listens for get/set/mutate events on all VM
+
+- compile(node, root)
+
+- compileNode(node)
 
