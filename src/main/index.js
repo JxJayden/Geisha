@@ -1,6 +1,3 @@
-function a () {
-    var a = 2;
-    return a;
-}
-
-a();
+module.exports = {
+    a: 1
+};

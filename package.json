@@ -5,12 +5,15 @@
     "main": "dist/geisha.js",
     "files": [],
     "scripts": {
-        "dev": "",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "webpack --watch --config build/dev.geisha.js",
+        "pack": "npm run pack:geisha & npm run pack:geisha:min",
+        "pack:geisha": "rollup -c build/pack.geisha.js",
+        "pack:geisha:min": "rollup -c build/pack.geisha.min.js"
     },
     "repository": {
-        "type": "git",
-        "url": "git+https://github.com/JxJayden/vue-j.git"
+        "url": "git+https://github.com/JxJayden/vue-j.git",
+        "type": "git"
     },
     "keywords": [
         "mvvm",
@@ -22,7 +25,7 @@
         "url": "https://github.com/JxJayden/vue-j/issues"
     },
     "homepage": "https://github.com/JxJayden/vue-j#readme",
-    "dependencies": {
+    "devDependencies": {
         "babel-core": "^6.23.1",
         "babel-loader": "^6.4.0",
         "babel-plugin-transform-runtime": "^6.23.0",
@@ -47,5 +50,8 @@
         "uglify-js": "^2.8.12",
         "webpack": "^2.2.1",
         "webpack-dev-middleware": "^1.10.1"
+    },
+    "dependencies": {
+        "rollup": "^0.41.5"
     }
 }

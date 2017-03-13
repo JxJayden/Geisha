@@ -1,4 +1,4 @@
-var fs = require('fs');
+// webpack config for develop geisha.js
 module.exports = {
 	entry: './src/main/index',
 	output: {
@@ -12,7 +12,7 @@ module.exports = {
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				loader: 'babel', // 'babel-loader' is also a legal name to reference
+				loader: 'babel-loader',
 				query: {
 					presets: ['es2015']
 				}
