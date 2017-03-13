@@ -410,3 +410,30 @@ Observer.observe(data, '', compiler.observer)
 
 - compileNode(node)
 
+- compileTextNode(node)
+
+  ```
+  // TextParser.parse as tokens
+  // each tokens:
+      //if a binding with key
+          // if '>' as partialId, compileNode()
+          // else parse as sd-text then bind dir
+
+      //if a plain string then createTextNode(token)
+  ```
+
+- bindDirective(direcitve)
+
+  ```
+  // append to dirs
+
+  // if a simple directive simply call its bind() or _update()
+
+  // if exp
+      // expression bindings, created on current compiler
+  // else
+  	// 
+  ```
+
+  ​
+
