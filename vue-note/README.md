@@ -431,9 +431,154 @@ Observer.observe(data, '', compiler.observer)
 
   // if exp
       // expression bindings, created on current compiler
+  // if data or vm has baseKey
+  	// Create the binding if it's not created already.
   // else
-  	// 
+  	// 由于绑定的原型继承，如果绑定对象上不存在键，那么它不存在于整个原型链中。 
+  	// 在这种情况下，我们在根级别创建新的绑定。
+  // invoke bind hook if exists
+
+  // set initial value
+  	refresh for computed. update for other
   ```
 
-  ​
+- createBinding(key, isExp, isFn)
+
+  ```
+  // Create binding and attach getter/setter for a key to the viewmodel object
+
+  // if isExp
+  // a complex expression binding
+  // parse exp to generate an anonymous computed property {$get:xx}
+  // apply `value`
+  // mark computed
+  // push to exps
+
+  // just key
+  // if root
+  	// define getter/setters for it.
+  // else 
+  	// ensure path in data so it can be observed
+  	// this is a nested value binding, but the binding for its parent
+  	// has not been created yet. We better create that one too.
+  ```
+
+- define(key, binding)
+
+  ``` 
+  Defines the getter/setter for a root-level binding on the VM and observe the initial value
+
+  binding.value = data[key] // save the value before redefinening it
+  // set 事件两次 ? question
+  // if (data.__observer__) {
+  //     Observer.convert(data, key)
+  // }
+  ```
+
+- markComputed(binding) Process a computed property binding
+
+- getOption(type, id)
+
+- execHook
+
+- destroy
+
+- getRoot
+
+#### ViewModel
+
+**props**
+
+- ${chidid:,...}
+- $el
+- $compiler
+- $root
+- $parent
+
+**func**
+
+- ViewModel(options) 直接 new Compiler
+- $set(key, value) 找到 basekey 对应 vm 然后设置
+- $watch(key, callback)
+- $unwatch
+- $destroy
+- $broadcast() 递归向下发布事件
+- $emit 自身 & 往上递归发事件
+- $on ()
+- $off ()
+- $once ()
+- $appendTo (target, cb)
+- $remove (cb)
+- $before (target, cb)
+- $after (target, cb)
+- getTargetVM (vm, path)
+
+#### Directive
+
+**props**
+
+- compiler
+- vm
+- el
+- isSimple
+- expression
+- bind 或 _update
+- rawKey
+- key
+- isExp
+- filters
+
+**func**
+
+- update
+- refresh -- computed property only --
+- apply
+- applyFilters
+- unbind
+- split
+- parse
+
+#### Binding
+
+> 每一个 vm 上的属性（路径）都有一个对应的 Binding 对象，这个对象有多个作用在 DOM 上的 指令 实例，以及多个依赖 binding 跟属性一一对应，所以 update 等方法的触发入口是属性被改变了
+
+**props**
+
+- value
+- isExp
+- isFn
+- root
+- compiler
+- key
+- subs = []
+- deps = []
+- isComputed // 表达式 / {$get:xx}
+- instances [,...]
+
+**func**
+
+- update
+
+- refresh
+
+- pub 
+
+  > Notify computed properties that depend on this binding to update themselves
+
+- unbind
+
+  >  Unbind the binding, remove itself from all of its dependencies
+
+#### Observer
+
+- watchObject
+  - convert
+- isWatchable (obj)
+- emitSet
+- copyPaths //保证旧对象的叶子路径都在新对象上
+- ensurePath  // 保证 各层路径 accessed 和 enumerated
+- observe (obj, rawPath, observer)
+- unobserve
+
+
 

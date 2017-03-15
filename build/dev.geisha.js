@@ -1,6 +1,6 @@
 // webpack config for develop geisha.js
 module.exports = {
-	entry: './src/main/index',
+	entry: './src/main',
 	output: {
 		path: './bundle',
 		library: 'Geisha',
