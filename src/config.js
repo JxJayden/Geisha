@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     prefix: 'v-',
-    debug:  !false
+    debug: !false
 };

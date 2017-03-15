@@ -1,33 +1,30 @@
-const
-    utils = require('./utils'),
-    parser = require('./parser'),
-    config = require('./config'),
-    observer = require('./observer'),
-    directives = require('./directives'),
+import {utils, log, def, extend, warn, createEmitter} from './utils';
+import parser from './parser';
+import observer from './observer';
+import directives from './directives';
 
+const
     slice = [].slice,
     BINDING_RE = /\{\{\{?(.+?)\}?\}\}/,
 
-    Emitter = utils.createEmitter(),
-
-    log = utils.log,
-    def = utils.defProtected,
-    expend = utils.extend;
+    Emitter = createEmitter();
 
 function Compiler(vm, options) {
     let data = this.$data = vm.$data = {};
 
     this.$el = vm.$el = document.querySelector(options.el);
-    // this.$frag = this.nodeToFrag(this.$el);
-    this.bindings = {};
+    this.$frag = this.nodeToFrag(this.$el);
+    this.$vm = vm;
+    this.bindings = Object.create(null);
+    this.dirs = [];
 
-    this.comile(this.$el, true);
+    this.comile(this.$frag, true);
 
-    expend(data, options.data);
+    extend(data, options.data);
 
     this.observeData(data);
 
-    // this.appendFrag(this.$frag, this.$el);
+    this.appendFrag(this.$frag, this.$el);
 }
 
 let coPro = Compiler.prototype;
@@ -61,7 +58,26 @@ coPro.comile = function (node, root) {
     }
 };
 
-coPro.comileNode = function (node) {
+coPro.comileNode = function (node, scope) {
+    if (!node.hasAttributes()) return;
+
+    let attrs = slice.call(node.attributes),
+        sco = scope || this.$vm,
+        compiler = this,
+        attrname, dirname, exp, directive;
+
+    attrs.forEach((attr) => {
+        if (utils.isDirective(attrname)) {
+            dirname = utils.getDirective(attrname);
+            exp = attr.value;
+            directive = parser.dir(dirname, exp, sco, node);
+
+            if (!directive) return;
+            if (directive['_update'] && utils.isFun(directive['_update'])) {
+                compiler.dirs.push(directive);
+            }
+        }
+    });
 
 };
 
@@ -72,12 +88,11 @@ coPro.comileTextNode = function (node) {
         values = textParser(node.nodeValue),
         el;
     if (!values) return;
-    log('textParser Value: \n', values);
+
     for (let i = 0; i < values.length; i++) {
         if (!values[i].key) {
             el = document.createTextNode(values[i]);
         } else {
-
             el = document.createTextNode('');
             createTextDirective(values[i].key, el, compiler);
         }
@@ -121,4 +136,4 @@ function createTextDirective(key, el, comiler) {
     });
 }
 
-module.exports = Compiler;
+export default Compiler;

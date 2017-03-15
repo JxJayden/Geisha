@@ -1,7 +1,7 @@
-const utils = require('../utils'),
-    config = require('../config');
+import utils from '../utils';
+import config from '../config';
 
-module.exports = {
+export default {
     'class': function (value) {
         if (this.arg) {
             utils[value ? 'addClass' : 'removeClass'](this.el, this.arg);

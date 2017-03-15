@@ -1,7 +1,6 @@
-const utils = require('./utils'),
-    Emitter = utils.createEmitter(),
-    isArray = utils.isArray,
-    log = utils.log;
+import {isArray, utils, log, createEmitter} from './utils';
+
+const Emitter = createEmitter();
 
 function observer(obj, key) {
     log('observer Object: \n' + obj);
@@ -38,7 +37,7 @@ function convert(obj, key) {
     } else {
         Object.defineProperty(obj, key, {
             get: function () {
-                utils.log(`emit: get ${key}`);
+                log(`emit: get ${key}`);
                 Emitter.emit(`get ${key}`, oldVal);
                 return oldVal;
             },
@@ -48,7 +47,7 @@ function convert(obj, key) {
                     if (typeof newVal === 'object') {
                         newVal = walk(newVal);
                     }
-                    utils.log(`emit: set ${key}`);
+                    log(`emit: set ${key}`);
                     Emitter.emit(`set ${key}`, newVal);
                 }
                 oldVal = newVal;
@@ -63,6 +62,6 @@ function observerArray(arr) {
     // TODO reset Array mothod;
 }
 
-module.exports = {
+export default {
     observe: observer
 };

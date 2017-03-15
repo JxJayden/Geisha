@@ -1,13 +1,15 @@
-const config = require('./config'),
-    Emitter = require('./emitter'),
-    hasClassList = 'classList' in document.documentElement;
+import config from './config';
+import Emitter from './emitter';
+
+const hasClassList = 'classList' in document.documentElement;
 let instances;
+
 /**
  * element 的子节点转换成文档片段（element 将会被清空）
  * @param {Element} el
  * @returns fragment
  */
-function nodeToFragment(el) {
+export function nodeToFragment(el) {
     let child = el.firstChild,
         fragment = document.createDocumentFragment();
 
@@ -24,7 +26,7 @@ function nodeToFragment(el) {
  * @param {any} value
  * @returns
  */
-function isString(value) {
+export function isString(value) {
     return value && typeof (value) === 'string';
 }
 
@@ -33,7 +35,7 @@ function isString(value) {
  * @param {any} value
  * @returns
  */
-function isArray(value) {
+export function isArray(value) {
     if (Array.isArray) {
         return Array.isArray(value);
     } else {
@@ -46,7 +48,7 @@ function isArray(value) {
  * @param {any} value
  * @returns
  */
-function isObject(value) {
+export function isObject(value) {
     return value && Object.prototype.toString.call(value) === '[object Object]';
 }
 
@@ -55,7 +57,7 @@ function isObject(value) {
  * @param {Function} fn
  * @returns
  */
-function isFun(fn) {
+export function isFun(fn) {
     return fn && typeof (value) === 'function';
 }
 
@@ -64,15 +66,18 @@ function isFun(fn) {
  * @param   {String}   directive
  * @return  {Boolean}
  */
-function isDirective(directive) {
+export function isDirective(directive) {
     return directive.indexOf(config.prefix) === 0;
 }
 
+export function getDirective(directive) {
+    return directive.slce(config.prefix.length);
+}
 /**
  * debug 模式则打印信息
  * @param {String} msg
  */
-function log(msg) {
+export function log(msg) {
     if (config.debug && console) console.log(msg);
 }
 
@@ -80,20 +85,20 @@ function log(msg) {
  * debug 模式则打印警告
  * @param {String} msg
  */
-function warn(msg) {
+export function warn(msg) {
     if (config.debug && console) console.warn(msg);
 }
 
-function createEmitter() {
+export function createEmitter() {
     if (instances) {
         return instances;
     } else {
         instances = new Emitter;
-        return  instances;
+        return instances;
     }
 }
 
-function defProtected(obj, key, val, enumerable, writable) {
+export function def(obj, key, val, enumerable, writable) {
     if (obj.hasOwnProperty(key)) return;
     Object.defineProperty(obj, key, {
         value: val,
@@ -103,7 +108,7 @@ function defProtected(obj, key, val, enumerable, writable) {
     });
 }
 
-function extend(obj, ext, protective) {
+export function extend(obj, ext, protective) {
     for (var key in ext) {
         if ((protective && obj[key]) || obj[key] === ext[key]) continue;
         obj[key] = ext[key];
@@ -111,7 +116,7 @@ function extend(obj, ext, protective) {
     return obj;
 }
 
-function removeClass(el, value) {
+export function removeClass(el, value) {
     if (hasClassList) {
         el.classList.remove(value);
     } else {
@@ -124,7 +129,7 @@ function removeClass(el, value) {
     }
 }
 
-function addClass(el, value) {
+export function addClass(el, value) {
     if (hasClassList) {
         el.classList.add(value);
     } else {
@@ -134,7 +139,8 @@ function addClass(el, value) {
         }
     }
 }
-var utils = module.exports = {
+
+let utils = {
     nodeToFragment: nodeToFragment,
     isString: isString,
     isArray: isArray,
@@ -146,6 +152,9 @@ var utils = module.exports = {
     createEmitter: createEmitter,
     addClass: addClass,
     removeClass: removeClass,
-    defProtected: defProtected,
-    extend: extend
+    def: def,
+    extend: extend,
+    getDirective: getDirective
 };
+
+export default utils;

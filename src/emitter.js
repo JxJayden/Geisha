@@ -1,3 +1,5 @@
+import {log, warn} from './utils';
+
 class Emitter {
     constructor() {
         this.subscribers = new Map([
@@ -8,9 +10,9 @@ class Emitter {
     }
 
     emit(type, ...args) {
-        console.log(`${type} is emit`);
+        log(`${type} is emit`);
         if (!this.subscribers.has(type)) {
-            console.log(`${type} is not exist`);
+            log(`${type} is not exist`);
         } else {
             for (let fn of this.subscribers.get(type)) {
                 fn.apply(null, args);
@@ -20,7 +22,7 @@ class Emitter {
     }
 
     addEventListener(type = 'default', fn) {
-        console.log(`${type} is create`);
+        log(`${type} is create`);
         let sub = this.subscribers;
 
         if (!sub) {
@@ -39,10 +41,10 @@ class Emitter {
         let sub = this.subscribers;
 
         if (!sub.has(type)) {
-            console.log(`${type} is not exist`);
+            log(`${type} is not exist`);
         } else {
             sub.delete(type);
-            console.log('delete success');
+            log('delete success');
         }
         return this;
     }
@@ -68,4 +70,4 @@ class Emitter {
     }
 }
 
-module.exports = Emitter;
+export default Emitter;

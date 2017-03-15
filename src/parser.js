@@ -1,8 +1,8 @@
-const utils = require('./utils'),
-    directives = require('./directives');
+import {isFun, warn} from './utils';
+import directives from'./directives';
 
 function dir(dirname, exp, context, node) {
-    if (directives[dirname] && utils.isFun(directives[dirname])) {
+    if (directives[dirname] && isFun(directives[dirname])) {
         return {
             name: dirname,
             exp: exp,
@@ -10,7 +10,7 @@ function dir(dirname, exp, context, node) {
             el: node
         };
     } else {
-        utils.warn(`${dirname} is not exist`);
+        warn(`${dirname} is not exist`);
     }
 }
 
@@ -18,7 +18,7 @@ function exp(expression) {
     return expression;
 }
 
-module.exports = {
+export default {
     dir: dir,
     exp: exp
 };

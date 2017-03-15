@@ -1,14 +1,7 @@
-const utils = require('./utils'),
-    parser = require('./parser'),
-    config = require('./config'),
-    observer = require('./observer'),
-    directives = require('./directives'),
-    Compiler = require('./compiler');
-
-
+import Compiler from './compiler';
 
 function Geisha (opitons) {
     new Compiler(this, opitons);
 }
 
-module.exports = Geisha;
+export default Geisha;
