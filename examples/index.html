@@ -6,10 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+    .active {
+        background: red;
+    }
+    </style>
 </head>
 
 <body>
-    <div id="app" v-class="test">
+    <div id="app" v-bind:class="{active: isActive}">
         {{ message }}test
     </div>
     <script src="../bundle/geisha.js"></script>
