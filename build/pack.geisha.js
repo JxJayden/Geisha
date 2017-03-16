@@ -2,7 +2,7 @@ import buble from 'rollup-plugin-buble';
 import { Banner } from './pack.banner';
 
 export default {
-	entry: './src/main',
+	entry: './src/index',
 	dest: './dist/geisha.js',
 	format: 'umd',
 	moduleName: 'Geisha',

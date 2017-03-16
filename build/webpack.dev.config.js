@@ -1,7 +1,7 @@
 var webpack = require('webpack')
 
 module.exports = {
-    entry: './src/main',
+    entry: './src/index',
     output: {
         path: './bundle',
         filename: 'Geisha.js',

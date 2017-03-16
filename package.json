@@ -3,11 +3,14 @@
     "version": "0.0.1",
     "description": "A mini front-end MVVM framework",
     "main": "dist/geisha.js",
-    "files": [],
+    "files": [
+        "dist/geisha.js",
+        "dist/geisha.min.js"
+    ],
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "webpack --watch --config build/webpack.dev.config.js",
-        "pack": "npm run pack:geisha & npm run pack:geisha:min",
+        "build": "npm run pack:geisha & npm run pack:geisha:min",
         "pack:geisha": "rollup -c build/pack.geisha.js",
         "pack:geisha:min": "rollup -c build/pack.geisha.min.js"
     },
@@ -47,9 +50,7 @@
         "rollup-plugin-uglify": "^1.0.1",
         "uglify-js": "^2.8.12",
         "webpack": "^2.2.1",
-        "webpack-dev-middleware": "^1.10.1"
-    },
-    "dependencies": {
+        "webpack-dev-middleware": "^1.10.1",
         "babel-plugin-add-module-exports": "^0.2.1"
     }
 }
