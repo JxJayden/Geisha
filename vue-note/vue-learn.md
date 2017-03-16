@@ -1,7 +1,9 @@
 # VUE 阅读笔记
+
 ## [5200951]
 
-#### Seed(el, options)
+### Seed(el, options)
+
 - 拷贝 options 到 this
 - new Scope
 - 如果有 data 则拷贝到 scope
@@ -9,7 +11,8 @@
 - call _compileNode
 - extract dependencies for computed properties
 
-#### _compileNode
+### _compileNode
+
 - 文本节点：_compileTextNode
 - 其他节点：
 
@@ -18,7 +21,7 @@
  > seed bind dir
  >
  > if ctrl but not root
- >  new chid Seed
+ > new chid Seed
  >
  > else
  > each attr
@@ -27,9 +30,10 @@
  >         seed bind dir
  > 递归 compile child nodes
 
-#### _compileTextNode
+### _compileTextNode
 
-#### _bind
+### _bind
+
 - traceOwnerSeed
 - call seed._createBinding
 - binding <-> dir
@@ -37,7 +41,8 @@
 - directive.update
 - directive.refresh
 
-#### Scope
+### Scope
+
 - property
 - $seed
 - $el
@@ -51,7 +56,8 @@
 - $destroy
 - $serialize
 
-#### Directive (directive-parser)
+### Directive (directive-parser)
+
 - new Directive(dirname, expression, oneway)
 - set this._update
 - call this.parseKey
@@ -78,10 +84,11 @@
 - observer
 - parse
 
-#### Binding
+### Binding
+
 ```javascript
-	this.inspect(utils.getNestedValue(seed.scope, path))
-	this.def(seed.scope, path) // Define getter/setter for this binding on scope
+this.inspect(utils.getNestedValue(seed.scope, path))
+this.def(seed.scope, path) // Define getter/setter for this binding on scope
 ```
 
 - property
@@ -103,6 +110,7 @@
 - pub: `each subs : dir.refresh()`
 
 ## [498778e]
+
 > 0.3.2 - make it actually work for Browserify
 
 ```
@@ -168,9 +176,11 @@ binding.update()
 
 外部引起的值改变先是 update 再触发依赖自己的 computed 成员去 refresh
 ```
+
 ---
 
-#### ViewModel
+### ViewModel
+
 - ViewModel(options) => new Compiler(ViewModel, options)
 - $set 对 vm 设值，key 可以为 a.b.c 这样的
 - $get
@@ -178,7 +188,8 @@ binding.update()
 - $unwatch
 - $destroy
 
-#### Compiler
+### Compiler
+
 - Compiler
 1. extend(options)
 2. extend(options.data)
@@ -193,6 +204,7 @@ binding.update()
 11. bindContexts(ctxBindings)
 
 - setupObserver
+
 ```
 observer
 	.on('get', callback)
@@ -201,6 +213,7 @@ observer
 ```
 
 - compileNode
+
 ```
 if textNode
 	compileTextNode
@@ -230,15 +243,15 @@ new Binding
 	ensurePath(key)
 	对如 `a.b.c` 这类，会保证
     binding = {
-        'a': 
+        'a':
         'a.b':
-        'a.b.c': 
+        'a.b.c':
     }
     每层 path 都有一个 bindingIns # question
     只对第一层 path 调用 this.define(a, aKeyBinding)
 ```
-- bindDirective 
 
+- bindDirective
 
 ```
 find target compiler: traceOwnerCompiler
@@ -259,7 +272,7 @@ else
 
 难点：
 getter 会触发 'get' 事件，目前是为了依赖侦测，为了获得最『纯净』的底层依赖，
-对以下类型不触发，因为以下类型的值肯定依赖更深的属性：isComputed value.__observer__ array 
+对以下类型不触发，因为以下类型的值肯定依赖更深的属性：isComputed value.__observer__ array
 
 setter
 对于 computed 的，有 set 方法就直接用，没有就不管。
@@ -269,7 +282,7 @@ setter
 - bindContexts
 - destroy
 
-#### Directive
+### Directive
 
 - Directive (directiveName, expression)
 
@@ -285,11 +298,11 @@ parse filters
 - refresh 值改变的时候会调用，只针对 computed 成员，当所依赖发生改变时
 - apply: Actually invoking the _update from the directive's definition
 
-#### ExpParser from https://github.com/RubyLouvre/avalon 
+### ExpParser from [https://github.com/RubyLouvre/avalon](https://github.com/RubyLouvre/avalon)
 
 ## [f4861ca]
 
-#### func (main.js)
+### func (main.js)
 
 - config(opts) 个人设置
 
@@ -297,7 +310,7 @@ parse filters
 
 - filter(id, fn) 注册 filter 指令
 
-- component(id, Ctor) 
+- component(id, Ctor)
 
   > 注册组件，用 util.toConstructor 转为 ViewModel(或子类)
 
@@ -313,7 +326,6 @@ parse filters
 
   ```
    Expose the main ViewModel class and add extend method
-   
   ```
 
 - inheritOptions (child, parent, topLevel)
@@ -326,7 +338,7 @@ parse filters
 
 - setPrefix()
 
-#### Compiler
+### Compiler
 
 **props**
 
@@ -354,7 +366,7 @@ parse filters
 
 **func**
 
-- Compiler(vm, options) 
+- Compiler(vm, options)
 
 ```
 compiler.init = true // indicate intiating this instance
@@ -378,7 +390,7 @@ compiler.init = true // indicate intiating this instance
 
 // beforeCompile hook
 
-// the user might have set some props on the vm 
+// the user might have set some props on the vm
 // so copy it back to the data...
 
 // observe the data
@@ -392,13 +404,13 @@ Observer.observe(data, '', compiler.observer)
 // now parse the DOM
 	// create necessary bindings
 	// bind the parsed directives
-	
+
 // extract dependencies for computed properties
 
 // done! post compile / ready hook
 ```
 
-- setupElement(options) 
+- setupElement(options)
 
   >  Initialize the VM/Compiler's element. Fill it in with the template if necessary.
 
@@ -434,7 +446,7 @@ Observer.observe(data, '', compiler.observer)
   // if data or vm has baseKey
   	// Create the binding if it's not created already.
   // else
-  	// 由于绑定的原型继承，如果绑定对象上不存在键，那么它不存在于整个原型链中。 
+  	// 由于绑定的原型继承，如果绑定对象上不存在键，那么它不存在于整个原型链中。
   	// 在这种情况下，我们在根级别创建新的绑定。
   // invoke bind hook if exists
 
@@ -457,7 +469,7 @@ Observer.observe(data, '', compiler.observer)
   // just key
   // if root
   	// define getter/setters for it.
-  // else 
+  // else
   	// ensure path in data so it can be observed
   	// this is a nested value binding, but the binding for its parent
   	// has not been created yet. We better create that one too.
@@ -465,7 +477,7 @@ Observer.observe(data, '', compiler.observer)
 
 - define(key, binding)
 
-  ``` 
+  ```
   Defines the getter/setter for a root-level binding on the VM and observe the initial value
 
   binding.value = data[key] // save the value before redefinening it
@@ -485,7 +497,7 @@ Observer.observe(data, '', compiler.observer)
 
 - getRoot
 
-#### ViewModel
+### ViewModel
 
 **props**
 
@@ -513,7 +525,7 @@ Observer.observe(data, '', compiler.observer)
 - $after (target, cb)
 - getTargetVM (vm, path)
 
-#### Directive
+### Directive
 
 **props**
 
@@ -538,7 +550,7 @@ Observer.observe(data, '', compiler.observer)
 - split
 - parse
 
-#### Binding
+### Binding
 
 > 每一个 vm 上的属性（路径）都有一个对应的 Binding 对象，这个对象有多个作用在 DOM 上的 指令 实例，以及多个依赖 binding 跟属性一一对应，所以 update 等方法的触发入口是属性被改变了
 
@@ -561,7 +573,7 @@ Observer.observe(data, '', compiler.observer)
 
 - refresh
 
-- pub 
+- pub
 
   > Notify computed properties that depend on this binding to update themselves
 
@@ -569,7 +581,7 @@ Observer.observe(data, '', compiler.observer)
 
   >  Unbind the binding, remove itself from all of its dependencies
 
-#### Observer
+### Observer
 
 - watchObject
   - convert
@@ -579,6 +591,8 @@ Observer.observe(data, '', compiler.observer)
 - ensurePath  // 保证 各层路径 accessed 和 enumerated
 - observe (obj, rawPath, observer)
 - unobserve
+
+
 
 
 
