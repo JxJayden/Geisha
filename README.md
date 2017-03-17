@@ -2,9 +2,9 @@
 
 参照 Vue 源码实现的一个 JavaScript MVVM 框架。
 
-<p align="center">
+<!--<p align="center">
   <a href=""><img src="" alt=""></a>
-</p>
+</p>-->
 
 ## License
 
