@@ -1,5 +1,5 @@
 import {isFun, warn} from './utils';
-import directives from'./directives';
+import directives from'./directives/index';
 
 function dir(dirname, exp, context, node) {
     if (directives[dirname] && isFun(directives[dirname])) {

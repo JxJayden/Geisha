@@ -1,4 +1,6 @@
-export default {
+const config = {
     prefix: 'v-',
-    debug: !false
+    silent: true
 };
+
+export default config;

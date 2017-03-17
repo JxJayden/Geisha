@@ -21,19 +21,13 @@ acorn-dynamic-import@^2.0.0:
   dependencies:
     acorn "^4.0.3"
 
-acorn-jsx@^3.0.0, acorn-jsx@^3.0.1:
+acorn-jsx@^3.0.0:
   version "3.0.1"
   resolved "http://registry.npm.taobao.org/acorn-jsx/download/acorn-jsx-3.0.1.tgz#afdf9488fb1ecefc8348f6fb22f464e32a58b36b"
   dependencies:
     acorn "^3.0.4"
 
-acorn-object-spread@^1.0.0:
-  version "1.0.0"
-  resolved "http://registry.npm.taobao.org/acorn-object-spread/download/acorn-object-spread-1.0.0.tgz#48ead0f4a8eb16995a17a0db9ffc6acaada4ba68"
-  dependencies:
-    acorn "^3.1.0"
-
-acorn@^3.0.4, acorn@^3.1.0, acorn@^3.3.0:
+acorn@^3.0.4:
   version "3.3.0"
   resolved "http://registry.npm.taobao.org/acorn/download/acorn-3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
 
@@ -900,18 +894,6 @@ browserify-zlib@^0.1.4:
   resolved "https://registry.npmjs.org/browserify-zlib/-/browserify-zlib-0.1.4.tgz#bb35f8a519f600e0fa6b8485241c979d0141fb2d"
   dependencies:
     pako "~0.2.0"
-
-buble@^0.15.0:
-  version "0.15.2"
-  resolved "https://registry.npmjs.org/buble/-/buble-0.15.2.tgz#547fc47483f8e5e8176d82aa5ebccb183b02d613"
-  dependencies:
-    acorn "^3.3.0"
-    acorn-jsx "^3.0.1"
-    acorn-object-spread "^1.0.0"
-    chalk "^1.1.3"
-    magic-string "^0.14.0"
-    minimist "^1.2.0"
-    os-homedir "^1.0.1"
 
 buffer-crc32@^0.2.1:
   version "0.2.13"
@@ -2685,12 +2667,6 @@ lru-cache@2.2.x:
   version "2.2.4"
   resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-2.2.4.tgz#6c658619becf14031d0d0b594b16042ce4dc063d"
 
-magic-string@^0.14.0:
-  version "0.14.0"
-  resolved "http://registry.npm.taobao.org/magic-string/download/magic-string-0.14.0.tgz#57224aef1701caeed273b17a39a956e72b172462"
-  dependencies:
-    vlq "^0.2.1"
-
 magic-string@^0.15.2:
   version "0.15.2"
   resolved "https://registry.npmjs.org/magic-string/-/magic-string-0.15.2.tgz#0681d7388741bbc3addaa65060992624c6c09e9c"
@@ -3013,7 +2989,7 @@ os-browserify@^0.2.0:
   version "0.2.1"
   resolved "https://registry.npmjs.org/os-browserify/-/os-browserify-0.2.1.tgz#63fc4ccee5d2d7763d26bbf8601078e6c2e0044f"
 
-os-homedir@^1.0.0, os-homedir@^1.0.1:
+os-homedir@^1.0.0:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/os-homedir/download/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
 
@@ -3510,13 +3486,6 @@ rollup-plugin-babel:
     babel-core "6"
     babel-plugin-transform-es2015-classes "^6.9.0"
     object-assign "^4.1.0"
-    rollup-pluginutils "^1.5.0"
-
-rollup-plugin-buble:
-  version "0.15.0"
-  resolved "https://registry.npmjs.org/rollup-plugin-buble/-/rollup-plugin-buble-0.15.0.tgz#83c3e89c7fd2266c7918f41ba3980313519c7fd0"
-  dependencies:
-    buble "^0.15.0"
     rollup-pluginutils "^1.5.0"
 
 rollup-plugin-eslint:
@@ -4229,7 +4198,7 @@ webpack:
     webpack-sources "^0.1.4"
     yargs "^6.0.0"
 
-webpack-dev-middleware@^1.0.11, webpack-dev-middleware@^1.9.0:
+webpack-dev-middleware, webpack-dev-middleware@^1.0.11, webpack-dev-middleware@^1.9.0:
   version "1.10.1"
   resolved "https://registry.npmjs.org/webpack-dev-middleware/-/webpack-dev-middleware-1.10.1.tgz#c6b4cf428139cf1aefbe06a0c00fdb4f8da2f893"
   dependencies:

@@ -1,9 +1,9 @@
-import {utils, log, def, extend, warn, createEmitter} from './utils';
-import parser from './parser';
-import observer from './observer';
-import directives from './directives';
+import {isFun, getDirective, isDirective, log, def, extend, warn, createEmitter} from '../utils';
+import parser from '../parser';
+import observer from '../observer';
+import directives from '../directives/index';
 
-const
+var
     slice = [].slice,
     BINDING_RE = /\{\{\{?(.+?)\}?\}\}/,
 
@@ -64,16 +64,21 @@ coPro.comileNode = function (node, scope) {
     let attrs = slice.call(node.attributes),
         sco = scope || this.$vm,
         compiler = this,
-        attrname, dirname, exp, directive;
+        dirname, exp, directive;
+
+    log(`${node.nodeName}'s attrs:\n`);
+    log(attrs);
 
     attrs.forEach((attr) => {
-        if (utils.isDirective(attrname)) {
-            dirname = utils.getDirective(attrname);
+        if (isDirective(attr.name)) {
+            dirname = getDirective(attr.name);
             exp = attr.value;
+            debugger;
             directive = parser.dir(dirname, exp, sco, node);
 
             if (!directive) return;
-            if (directive['_update'] && utils.isFun(directive['_update'])) {
+            if (directive['_update'] && isFun(directive['_update'])) {
+                log(directive['_update']);
                 compiler.dirs.push(directive);
             }
         }

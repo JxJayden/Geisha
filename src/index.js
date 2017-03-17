@@ -1,7 +1,3 @@
-import Compiler from './compiler';
-
-function Geisha (opitons) {
-    new Compiler(this, opitons);
-}
-
+import Geisha from './instance/geisha';
+// may be will do something;
 export default Geisha;

@@ -5,19 +5,18 @@
 
 const
     fs = require('fs')
-    buble = require('rollup-plugin-babel')
-    rollup = require('rollup')
-    uglify = require('uglify-js')
-    babel = require('rollup-plugin-babel')
-    replace = require('rollup-plugin-replace')
-    zlib = require('zlib')
-    version = process.env.VERSION || require('../package.json').version
-    banner =
-        '/*!\n' +
-        ' * Geisha.js v' + version + '\n' +
-        ' * (c) ' + new Date().getFullYear() + ' Jayden Jiang\n' +
-        ' * Released under the MIT License.\n' +
-        ' */\n';
+rollup = require('rollup')
+uglify = require('uglify-js')
+babel = require('rollup-plugin-babel')
+replace = require('rollup-plugin-replace')
+zlib = require('zlib')
+version = process.env.VERSION || require('../package.json').version
+banner =
+    '/*!\n' +
+    ' * Geisha.js v' + version + '\n' +
+    ' * (c) ' + new Date().getFullYear() + ' Jayden Jiang\n' +
+    ' * Released under the MIT License.\n' +
+    ' */\n';
 
 // CommonJS build.
 // this is used as the "main" field in package.json
@@ -25,7 +24,9 @@ const
 rollup.rollup({
         entry: 'src/index.js',
         plugins: [
-            babel()
+            babel({
+                "presets": ["es2015-rollup"]
+            })
         ]
     })
     .then(function (bundle) {
@@ -42,7 +43,9 @@ rollup.rollup({
                     replace({
                         'process.env.NODE_ENV': "'development'"
                     }),
-                    babel()
+                    babel({
+                "presets": ["es2015-rollup"]
+            })
                 ]
             })
             .then(function (bundle) {
@@ -61,7 +64,9 @@ rollup.rollup({
                     replace({
                         'process.env.NODE_ENV': "'production'"
                     }),
-                    babel()
+                    babel({
+                "presets": ["es2015-rollup"]
+            })
                 ]
             })
             .then(function (bundle) {

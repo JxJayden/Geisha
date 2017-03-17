@@ -9,12 +9,12 @@ class Emitter {
         this.remove = this.removeEventListener;
     }
 
-    emit(type, ...args) {
-        log(`${type} is emit`);
-        if (!this.subscribers.has(type)) {
-            log(`${type} is not exist`);
+    emit(t, ...args) {
+        log(`${t} is emit`);
+        if (!this.subscribers.has(t)) {
+            log(`${t} is not exist`);
         } else {
-            for (let fn of this.subscribers.get(type)) {
+            for (let fn of this.subscribers.get(t)) {
                 fn.apply(null, args);
             }
         }

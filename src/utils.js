@@ -71,14 +71,14 @@ export function isDirective(directive) {
 }
 
 export function getDirective(directive) {
-    return directive.slce(config.prefix.length);
+    return directive.slice(config.prefix.length);
 }
 /**
  * debug 模式则打印信息
  * @param {String} msg
  */
 export function log(msg) {
-    if (config.debug && console) console.log(msg);
+    if (config.silent && console) console.log(msg);
 }
 
 /**
@@ -86,7 +86,7 @@ export function log(msg) {
  * @param {String} msg
  */
 export function warn(msg) {
-    if (config.debug && console) console.warn(msg);
+    if (config.silent && console) console.warn(msg);
 }
 
 export function createEmitter() {

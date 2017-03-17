@@ -1,4 +1,4 @@
-import {isArray, utils, log, createEmitter} from './utils';
+import {isArray, log, createEmitter} from './utils';
 
 const Emitter = createEmitter();
 

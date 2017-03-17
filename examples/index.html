@@ -14,7 +14,8 @@
 </head>
 
 <body>
-    <div id="app" v-bind:class="{active: isActive}">
+    <div id="app">
+        <div class="test" v-bind:class="{active}">test bind /n</div>
         {{ message }}test
     </div>
     <script src="../bundle/geisha.js"></script>
@@ -23,7 +24,8 @@
         var app = new Geisha({
             el: '#app',
             data: {
-                message: 'test'
+                message: 'test',
+                isActive: true
             }
         })
     </script>
