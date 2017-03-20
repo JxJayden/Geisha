@@ -1,4 +1,4 @@
-import {isFun, warn} from './utils';
+import {isFun, warn, log} from './utils';
 import directives from'./directives/index';
 
 function dir(dirname, exp, context, node) {
@@ -15,7 +15,8 @@ function dir(dirname, exp, context, node) {
 }
 
 function exp(expression) {
-    return expression;
+    var exp = expression.match(/\{(.+?)\}/);
+    return exp[1].trim();
 }
 
 export default {

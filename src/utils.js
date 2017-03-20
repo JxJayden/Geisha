@@ -58,7 +58,7 @@ export function isObject(value) {
  * @returns
  */
 export function isFun(fn) {
-    return fn && typeof (value) === 'function';
+    return fn && typeof (fn) === 'function';
 }
 
 /**
@@ -129,13 +129,18 @@ export function removeClass(el, value) {
     }
 }
 
-export function addClass(el, value) {
+export function addClass(el, value, old) {
     if (hasClassList) {
+        el.classList.remove(old);
         el.classList.add(value);
     } else {
         var cur = ' ' + el.className + ' ';
-        if (cur.indexOf(' ' + value + ' ') < 0) {
+        if (cur.indexOf(' ' + old + ' ') > 0) {
+            removeClass(el, old);
             el.className = (cur + value).trim();
+        } else if (cur.indexOf(' ' + value + ' ') < 0) {
+            el.className = (cur + value).trim();
+
         }
     }
 }

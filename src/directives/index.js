@@ -2,12 +2,15 @@ import utils from '../utils';
 import config from '../config';
 
 export default {
-    'class': function (value) {
-        if (this.arg) {
-            utils[value ? 'addClass' : 'removeClass'](this.el, this.arg);
+    'class': function (el, newVal, oldVal) {
+        if (newVal) {
+            utils[newVal ? 'addClass' : 'removeClass'](el, newVal, oldVal);
         } else {
-            utils.removeClass(this.el);
+            utils.removeClass(el);
         }
+    },
+    'id': function (el, newVal, oldVal) {
+        el.id = newVal;
     },
     'text': {
         bind: function () {

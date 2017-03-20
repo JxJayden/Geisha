@@ -1,4 +1,13 @@
-import {isFun, getDirective, isDirective, log, def, extend, warn, createEmitter} from '../utils';
+import {
+    isFun,
+    getDirective,
+    isDirective,
+    log,
+    def,
+    extend,
+    warn,
+    createEmitter
+} from '../utils';
 import parser from '../parser';
 import observer from '../observer';
 import directives from '../directives/index';
@@ -44,7 +53,7 @@ coPro.observeData = function (data) {
 };
 
 coPro.comile = function (node, root) {
-    log('comile element: ' + node.nodeName);
+    log('--comile element: ' + node.nodeName);
 
     if (node.nodeType === 1) {
         this.comileNode(node);
@@ -56,6 +65,7 @@ coPro.comile = function (node, root) {
             this.comile(node.childNodes[i]);
         }
     }
+    log('|--end comile: ' + node.nodeName);
 };
 
 coPro.comileNode = function (node, scope) {
@@ -66,21 +76,22 @@ coPro.comileNode = function (node, scope) {
         compiler = this,
         dirname, exp, directive;
 
-    log(`${node.nodeName}'s attrs:\n`);
+    log(`----${node.nodeName}'s attrs:\n`);
     log(attrs);
 
     attrs.forEach((attr) => {
         if (isDirective(attr.name)) {
             dirname = getDirective(attr.name);
-            exp = attr.value;
-            debugger;
+            dirname = dirname.indexOf('bind:') === 0 ?
+                dirname.slice(5) :
+                dirname;
+            exp = parser.exp(attr.value);
+            log(`----${dirname} => ${exp}`);
             directive = parser.dir(dirname, exp, sco, node);
 
             if (!directive) return;
-            if (directive['_update'] && isFun(directive['_update'])) {
-                log(directive['_update']);
-                compiler.dirs.push(directive);
-            }
+            compiler.bindDirective(directive, node, compiler);
+            node.removeAttribute(attr.name);
         }
     });
 
@@ -110,6 +121,25 @@ coPro.appendFrag = function (frag, el) {
     el.appendChild(frag);
 };
 
+coPro.bindDirective = function (dir, node, scope) {
+    var comiler = scope || this;
+
+    var setNode = comiler[`set ${node.nodeName}`] = comiler[`set ${node.nodeName}`] || {};
+
+    setNode[dir.name] = dir._update;
+    setNode.el = dir.el;
+
+    if (dir.exp) {
+        if (!comiler.$data.hasOwnProperty(dir.exp)) {
+            observer.observe(comiler.$data, dir.exp);
+        }
+        Emitter.on(`set ${dir.exp}`, function (newVal, oldVal) {
+            log(`emit dir: ${dir.name}`);
+            setNode[dir.name].call(null, dir.el, newVal, oldVal);
+        });
+    }
+};
+
 function textParser(text) {
     if (!BINDING_RE.test(text)) return;
 
@@ -135,7 +165,9 @@ function textParser(text) {
 
 function createTextDirective(key, el, comiler) {
     log('createTextDirective: ' + key);
-    observer.observe(comiler.$data, key);
+    if (!comiler.$data.hasOwnProperty(key)) {
+        observer.observe(comiler.$data, key);
+    }
     Emitter.on(`set ${key}`, function (value) {
         el.textContent = value;
     });

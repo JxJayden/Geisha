@@ -37,18 +37,20 @@ function convert(obj, key) {
     } else {
         Object.defineProperty(obj, key, {
             get: function () {
-                log(`emit: get ${key}`);
                 Emitter.emit(`get ${key}`, oldVal);
                 return oldVal;
             },
             set: function (newVal) {
-
                 if (oldVal !== newVal) {
-                    if (typeof newVal === 'object') {
+                    if (!newVal) {
+                        newVal = null;
+                    }
+
+                    if (typeof newVal === 'object' && newVal !== null) {
                         newVal = walk(newVal);
                     }
-                    log(`emit: set ${key}`);
-                    Emitter.emit(`set ${key}`, newVal);
+
+                    Emitter.emit(`set ${key}`, newVal, oldVal);
                 }
                 oldVal = newVal;
 
