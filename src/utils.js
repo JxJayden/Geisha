@@ -1,8 +1,8 @@
-import config from './config';
-import Emitter from './emitter';
+import config from './config'
+import Emitter from './emitter'
 
-const hasClassList = 'classList' in document.documentElement;
-let instances;
+const hasClassList = 'classList' in document.documentElement
+let instances
 
 /**
  * element 的子节点转换成文档片段（element 将会被清空）
@@ -11,14 +11,14 @@ let instances;
  */
 export function nodeToFragment(el) {
     let child = el.firstChild,
-        fragment = document.createDocumentFragment();
+        fragment = document.createDocumentFragment()
 
     while (child) {
-        fragment.appendChild(child);
-        child = el.firstChild;
+        fragment.appendChild(child)
+        child = el.firstChild
     }
 
-    return fragment;
+    return fragment
 }
 
 /**
@@ -27,7 +27,7 @@ export function nodeToFragment(el) {
  * @returns
  */
 export function isString(value) {
-    return value && typeof (value) === 'string';
+    return value && typeof (value) === 'string'
 }
 
 /**
@@ -37,9 +37,9 @@ export function isString(value) {
  */
 export function isArray(value) {
     if (Array.isArray) {
-        return Array.isArray(value);
+        return Array.isArray(value)
     } else {
-        return value && Object.prototype.toString.call(value) === '[object Array]';
+        return value && Object.prototype.toString.call(value) === '[object Array]'
     }
 }
 
@@ -49,7 +49,7 @@ export function isArray(value) {
  * @returns
  */
 export function isObject(value) {
-    return value && Object.prototype.toString.call(value) === '[object Object]';
+    return value && Object.prototype.toString.call(value) === '[object Object]'
 }
 
 /**
@@ -58,7 +58,7 @@ export function isObject(value) {
  * @returns
  */
 export function isFun(fn) {
-    return fn && typeof (fn) === 'function';
+    return fn && typeof (fn) === 'function'
 }
 
 /**
@@ -67,18 +67,18 @@ export function isFun(fn) {
  * @return  {Boolean}
  */
 export function isDirective(directive) {
-    return directive.indexOf(config.prefix) === 0;
+    return directive.indexOf(config.prefix) === 0
 }
 
 export function getDirective(directive) {
-    return directive.slice(config.prefix.length);
+    return directive.slice(config.prefix.length)
 }
 /**
  * debug 模式则打印信息
  * @param {String} msg
  */
 export function log(msg) {
-    if (config.silent && console) console.log(msg);
+    if (config.silent && console) console.log(msg)
 }
 
 /**
@@ -86,60 +86,60 @@ export function log(msg) {
  * @param {String} msg
  */
 export function warn(msg) {
-    if (config.silent && console) console.warn(msg);
+    if (config.silent && console) console.warn(msg)
 }
 
 export function createEmitter() {
     if (instances) {
-        return instances;
+        return instances
     } else {
-        instances = new Emitter;
-        return instances;
+        instances = new Emitter
+        return instances
     }
 }
 
 export function def(obj, key, val, enumerable, writable) {
-    if (obj.hasOwnProperty(key)) return;
+    if (obj.hasOwnProperty(key)) return
     Object.defineProperty(obj, key, {
         value: val,
         enumerable: !!enumerable,
         writable: !!writable,
         configurable: true
-    });
+    })
 }
 
 export function extend(obj, ext, protective) {
     for (var key in ext) {
-        if ((protective && obj[key]) || obj[key] === ext[key]) continue;
-        obj[key] = ext[key];
+        if ((protective && obj[key]) || obj[key] === ext[key]) continue
+        obj[key] = ext[key]
     }
-    return obj;
+    return obj
 }
 
 export function removeClass(el, value) {
     if (hasClassList) {
-        el.classList.remove(value);
+        el.classList.remove(value)
     } else {
         var cur = ' ' + el.className + ' ',
-            tar = ' ' + value + ' ';
+            tar = ' ' + value + ' '
         while (cur.indexOf(tar) >= 0) {
-            cur = cur.replace(tar, ' ');
+            cur = cur.replace(tar, ' ')
         }
-        el.className = cur.trim();
+        el.className = cur.trim()
     }
 }
 
 export function addClass(el, value, old) {
     if (hasClassList) {
-        el.classList.remove(old);
-        el.classList.add(value);
+        el.classList.remove(old)
+        el.classList.add(value)
     } else {
-        var cur = ' ' + el.className + ' ';
+        var cur = ' ' + el.className + ' '
         if (cur.indexOf(' ' + old + ' ') > 0) {
-            removeClass(el, old);
-            el.className = (cur + value).trim();
+            removeClass(el, old)
+            el.className = (cur + value).trim()
         } else if (cur.indexOf(' ' + value + ' ') < 0) {
-            el.className = (cur + value).trim();
+            el.className = (cur + value).trim()
 
         }
     }
@@ -160,6 +160,6 @@ let utils = {
     def: def,
     extend: extend,
     getDirective: getDirective
-};
+}
 
-export default utils;
+export default utils

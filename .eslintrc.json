@@ -24,7 +24,7 @@
         ],
         "semi": [
             "error",
-            "always"
+            "never"
         ]
     }
 }
