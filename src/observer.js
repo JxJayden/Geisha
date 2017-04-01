@@ -1,6 +1,5 @@
-import {isArray, log, createEmitter} from './utils'
-
-const Emitter = createEmitter()
+import {isArray, log } from './utils'
+import Emitter from './emitter'
 
 function observer(obj, key) {
     log('observer Object: \n' + obj)

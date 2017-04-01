@@ -1,5 +1,6 @@
 import Compiler from '../compiler/index'
 import initMixin from './init'
+import stateMixin from './state'
 
 /**
  * 入口函数
@@ -14,6 +15,7 @@ function Geisha(options) {
  * 参考 vue 1.0.10 版本
  */
 initMixin(Geisha)
+stateMixin(Geisha)
 
 export default Geisha
 

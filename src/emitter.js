@@ -1,4 +1,7 @@
-import {log, warn} from './utils'
+import {
+    log,
+    warn
+} from './utils'
 
 class Emitter {
     constructor() {
@@ -62,12 +65,14 @@ class Emitter {
     }
 
     emitAll(...args) {
-        this.subscribers.forEach((fns, key) => {
-            fns.forEach((fn) => {
+        console.log(this.subscribers)
+        this.subscribers.forEach(function (fns, key) {
+            console.log(fns)
+            fns.forEach(function (fn) {
                 fn && fn.apply(null, args)
             })
         })
     }
 }
 
-export default Emitter
+export default new Emitter

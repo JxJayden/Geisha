@@ -2,7 +2,6 @@ import config from './config'
 import Emitter from './emitter'
 
 const hasClassList = 'classList' in document.documentElement
-let instances
 
 /**
  * element 的子节点转换成文档片段（element 将会被清空）
@@ -36,11 +35,7 @@ export function isString(value) {
  * @returns
  */
 export function isArray(value) {
-    if (Array.isArray) {
-        return Array.isArray(value)
-    } else {
-        return value && Object.prototype.toString.call(value) === '[object Array]'
-    }
+    return Array.isArray(value) || toString.call(value) === '[object Array]'
 }
 
 /**
@@ -87,15 +82,6 @@ export function log(msg) {
  */
 export function warn(msg) {
     if (config.silent && console) console.warn(msg)
-}
-
-export function createEmitter() {
-    if (instances) {
-        return instances
-    } else {
-        instances = new Emitter
-        return instances
-    }
 }
 
 export function def(obj, key, val, enumerable, writable) {
@@ -154,7 +140,6 @@ let utils = {
     log: log,
     warn: warn,
     isDirective: isDirective,
-    createEmitter: createEmitter,
     addClass: addClass,
     removeClass: removeClass,
     def: def,

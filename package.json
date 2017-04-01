@@ -10,6 +10,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "webpack --watch --config build/webpack.dev.config.js",
+        "example": "browser-sync start --server --index 'examples/index.html' -f 'bundle/*' 'examples'",
         "build": "NODE_ENV=production node build/build.js"
     },
     "repository": {

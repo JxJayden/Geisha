@@ -5,21 +5,17 @@ import {
     log,
     def,
     extend,
-    warn,
-    createEmitter
+    warn
 } from '../utils'
 import parser from '../parser'
 import observer from '../observer'
 import directives from '../directives/index'
-
-var
-    slice = [].slice,
-    BINDING_RE = /\{\{\{?(.+?)\}?\}\}/,
-
-    Emitter = createEmitter()
+import Emitter from '../emitter'
+const slice = [].slice,
+    BINDING_RE = /\{\{\{?(.+?)\}?\}\}/
 
 function Compiler(vm, options) {
-    let data = this.$data = vm.$data = {}
+    let data = this.$data = vm.$data
 
     this.$el = vm.$el = document.querySelector(options.el)
     this.$frag = this.nodeToFrag(this.$el)
@@ -28,12 +24,8 @@ function Compiler(vm, options) {
     this.dirs = []
 
     this.comile(this.$frag, true)
-
-    extend(data, options.data)
-
-    this.observeData(data)
-
     this.appendFrag(this.$frag, this.$el)
+    Emitter.emitAll()
 }
 
 let coPro = Compiler.prototype
@@ -46,10 +38,6 @@ coPro.nodeToFrag = function (el) {
         child = el.firstChild
     }
     return fragment
-}
-
-coPro.observeData = function (data) {
-    observer.observe(data)
 }
 
 coPro.comile = function (node, root) {

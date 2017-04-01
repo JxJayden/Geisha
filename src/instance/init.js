@@ -1,4 +1,5 @@
 import Compiler from '../compiler/index'
+import Emitter from '../emitter'
 
 export default function (Geisha) {
     Geisha.prototype._init = function (options) {
@@ -12,14 +13,13 @@ export default function (Geisha) {
 
         this._frag = null // 存放文档片段
 
-        this._data =
         this.$data = {}
 
-        // this._initState()
+        this._emitter = Emitter
+
+        this._initState(Geisha)
 
         // this._initEvents()
-
-        // this._initEmitter()
 
         new Compiler(this, options)
     }
