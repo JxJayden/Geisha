@@ -1,10 +1,11 @@
-import apiMixin from '../api'
+import Compiler from '../compiler/index'
+import apiMixin from '../main'
 /**
  * 入口函数
  * @param {Object} options
  */
 function Geisha(options) {
-    this.$init(options)
+    this._init(options)
 }
 
 /**
@@ -13,4 +14,3 @@ function Geisha(options) {
 apiMixin(Geisha)
 
 export default Geisha
-

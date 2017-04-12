@@ -1,18 +1,8 @@
-import {isArray, log } from './utils'
-import Emitter from './emitter'
-
-function observer(obj, key) {
-    log('observer Object: \n' + obj)
-    if (isArray(obj, key)) {
-        observerArray(obj)
-    } else {
-        if (key) {
-            convert(obj, key)
-        } else {
-            walk(obj)
-        }
-    }
-}
+import {
+    isArray,
+    log
+} from './utils'
+import Dep from './Dependence'
 
 function walk(obj) {
     let value
@@ -29,6 +19,7 @@ function walk(obj) {
 }
 
 function convert(obj, key) {
+    var dep = new Dep()
     var oldVal = obj[key]
 
     if (isArray(oldVal)) {
@@ -36,7 +27,7 @@ function convert(obj, key) {
     } else {
         Object.defineProperty(obj, key, {
             get: function () {
-                Emitter.emit(`get ${key}`, oldVal)
+                Dep.target && dep.addSub(Dep.target)
                 return oldVal
             },
             set: function (newVal) {
@@ -48,10 +39,9 @@ function convert(obj, key) {
                     if (typeof newVal === 'object' && newVal !== null) {
                         newVal = walk(newVal)
                     }
-
-                    Emitter.emit(`set ${key}`, newVal, oldVal)
+                    oldVal = newVal
+                    dep.notify()
                 }
-                oldVal = newVal
 
             }
         })
@@ -63,6 +53,15 @@ function observerArray(arr) {
     // TODO reset Array mothod
 }
 
-export default {
-    observe: observer
+
+export default function observer(obj, key) {
+    if (isArray(obj, key)) {
+        observerArray(obj)
+    } else {
+        if (key) {
+            convert(obj, key)
+        } else {
+            walk(obj)
+        }
+    }
 }

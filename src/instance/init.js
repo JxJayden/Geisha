@@ -1,9 +1,10 @@
-import Compiler from '../compiler/index'
-import Emitter from '../emitter'
-
+import { log } from '../utils'
 export default function (Geisha) {
-    Geisha.prototype._init = function (options) {
+    Geisha.prototype.$init = function (options) {
+        log('.   start init')
         this.$options = options || {} // 复制选项
+
+        this.$el = document.querySelector(options.el)
 
         this._watchers = [] // 所有的 watchers
 
@@ -15,13 +16,13 @@ export default function (Geisha) {
 
         this.$data = {}
 
-        this._emitter = Emitter
-
-        this._initState(Geisha)
+        this.$initState()
 
         // this._initEvents()
 
-        new Compiler(this, options)
+        if (this.$el) {
+            this.$mount()
+        }
     }
 }
 

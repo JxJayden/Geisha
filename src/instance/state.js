@@ -1,20 +1,19 @@
 import {
     log,
+    logE,
+    logS,
     warn,
     extend
 } from '../utils'
 import observer from '../observer'
 
 export default function (Geisha) {
-    Geisha.prototype._initState = function () {
-        log('begin _initState')
-        log(this)
+    Geisha.prototype.$initState = function () {
+        logS('begin initState')
 
         extend(this.$data, this.$options.data)
-        observeData(this.$data)
-    }
-}
+        observer(this.$data)
 
-function observeData(data) {
-    observer.observe(data)
+        logE()
+    }
 }

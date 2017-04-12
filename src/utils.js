@@ -1,8 +1,7 @@
 import config from './config'
-import Emitter from './emitter'
 
-const hasClassList = 'classList' in document.documentElement
-
+const hasClassList = 'classList' in document.documentElement,
+    toString = Object.prototype.toString
 /**
  * element 的子节点转换成文档片段（element 将会被清空）
  * @param {Element} el
@@ -44,7 +43,7 @@ export function isArray(value) {
  * @returns
  */
 export function isObject(value) {
-    return value && Object.prototype.toString.call(value) === '[object Object]'
+    return value && toString.call(value) === '[object Object]'
 }
 
 /**
@@ -77,6 +76,29 @@ export function log(msg) {
 }
 
 /**
+ * 打印错误
+ * @param {String} msg
+ */
+export function error(msg) {
+    console.error(msg)
+}
+
+/**
+ * debug 模式则打印 start 信息
+ * @param {String} msg
+ */
+export function logS(msg) {
+    if (config.silent && console) console.log('├── ', msg)
+}
+
+/**
+ * debug 模式则打印 start 信息
+ */
+export function logE() {
+    if (config.silent && console) console.log('    └── end ──')
+}
+
+/**
  * debug 模式则打印警告
  * @param {String} msg
  */
@@ -100,6 +122,18 @@ export function extend(obj, ext, protective) {
         obj[key] = ext[key]
     }
     return obj
+}
+
+export function isEqual(a, b) {
+    return a == b || (
+        isObject(a) && isObject(b) ?
+        JSON.stringify(a) === JSON.stringify(b) :
+        false
+    )
+}
+
+export function isEmpty(val) {
+    return typeof val === 'undefined' || toString.call(val) === '[object Null]'
 }
 
 export function removeClass(el, value) {
@@ -140,11 +174,10 @@ let utils = {
     log: log,
     warn: warn,
     isDirective: isDirective,
-    addClass: addClass,
-    removeClass: removeClass,
     def: def,
     extend: extend,
-    getDirective: getDirective
+    getDirective: getDirective,
+    isEqual: isEqual
 }
 
 export default utils

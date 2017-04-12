@@ -120,7 +120,7 @@ _initData => { // Initialize the data.
   // 先检测 data 有没有被定义为 prop
   if (this._props[prop].raw !== null ||!hasOwn(optionsData, prop
   	set // Set a property on an object. Adds the new property and triggers change notification if the property doesn't already exist.
-                                               
+
   this._proxy(data.allkey) //proxy data on instance
   observe(data, this) // observe data
 }
@@ -130,13 +130,13 @@ _initComputed => { // Setup computed properties.
   	makeComputedGetter
   else
     分别处理 get set
-  
+
   Object.defineProperty(this, key, def)
 }
 
 Vue.prototype._setData => { // Swap the instance's $data. Called in $data's setter.
   if key not in new data => this._unproxy(key)
-  
+
   if key not in old data but in new data => this._proxy(key)
   oldData.__ob__.removeVm(this)
   observe(newData, this)
@@ -157,6 +157,3 @@ Vue.prototype._proxy => {
       })
 }
 ```
-
-
-
