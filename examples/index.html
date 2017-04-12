@@ -17,8 +17,9 @@
     <div id="app">
         <img v-bind:src="imgUrl" alt="">
         <input type="" name="" value="" v-model="message">
-        <div class="test" v-bind:class="active" v-bind:id="active">test bind /n</div>
-        {{ message }}
+        <div class="test" v-bind:class="active" v-bind:id="active">test bind</div>
+        <span>{{ message }}</span>
+        <div v-text="message"></div>
     </div>
     <script src="../bundle/geisha.js"></script>
     <script>

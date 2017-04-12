@@ -27,6 +27,7 @@ export default function (Geisha) {
     }
 
     Geisha.prototype._compiler = function (node, scope) {
+        var nodes = slice.call(node.childNodes)
         scope = scope || this
         node.$id = $$id++; // eslint-disable-line semi
         if (node.childNodes.length <= 0) {
@@ -34,11 +35,16 @@ export default function (Geisha) {
             return false
         }
         log('    └── compiler childNodes')
-        for (var i = 0; i < node.childNodes.length; i++) {
-            var child = node.childNodes[i]
+
+        for (var i = 0; i < nodes.length; i++) {
+            var child = nodes[i]
             if (child.nodeType === 3) {
                 this._compilerTextNode(child, scope)
             } else {
+                if (child.hasChildNodes()) {
+                    debugger
+                    this._compiler(child)
+                }
                 this._compileElementNode(child, scope)
             }
         }
@@ -53,7 +59,7 @@ export default function (Geisha) {
             self = this,
             data = this.$data,
             el
-
+        if (!values) return
         for (var i = 0; i < values.length; i++) {
             if (!values[i].key) {
                 el = document.createTextNode(values[i])
@@ -111,15 +117,15 @@ var handler = {
     // 属性指令 v-bind:id="id", v-bind:class="class"
     bind: function (node, scope, exp, attr) {
         switch (attr) {
-        case 'class':
-            bindClassDir(node, scope, exp)
-            break
-        case 'style':
-            bindStyleDir(node, scope, exp)
-            break
-        default:
-            bindWatcher(node, scope, exp, 'attr', attr)
-            break
+            case 'class':
+                bindClassDir(node, scope, exp)
+                break
+            case 'style':
+                bindStyleDir(node, scope, exp)
+                break
+            default:
+                bindWatcher(node, scope, exp, 'attr', attr)
+                break
         }
     }
 }
@@ -128,7 +134,7 @@ var directives = {
     text: function (node, newVal, oldVal) {
         node.textContent = isEmpty(newVal) ? '' : newVal
     },
-    attr: function (node, newVal,oldVal, attrName) {
+    attr: function (node, newVal, oldVal, attrName) {
         node.setAttribute(attrName, isEmpty(newVal) ? '' : newVal)
     },
     class: function (node, newVal, oldVal) {
@@ -149,7 +155,8 @@ function bindWatcher(node, scope, exp, dir, prop) {
 }
 
 function getDirective(attrName) {
-    var dir = {}, parse
+    var dir = {},
+        parse
     if (attrName.indexOf(config.prefix) === 0) {
         parse = attrName.substring(2).split(':')
         dir.type = parse[0]
