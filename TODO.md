@@ -5,7 +5,7 @@
 - [x] 实现 v-bind
   - [x] 实现 v-bind:class 和 v-bind:id
   - [x] 实现 v-bind:xxx
-- [ ] 实现 v-text 和 v-html
+- [x] 实现 v-text 和 v-html
 - v-text 表达式
 - v-bind 表达式
 - v-bind:class 数组和对象

@@ -1,6 +1,6 @@
 {
     "name": "geisha.js",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "A mini front-end MVVM framework",
     "main": "dist/geisha.js",
     "files": [

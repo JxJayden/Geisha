@@ -42,7 +42,6 @@ export default function (Geisha) {
                 this._compilerTextNode(child, scope)
             } else {
                 if (child.hasChildNodes()) {
-                    debugger
                     this._compiler(child)
                 }
                 this._compileElementNode(child, scope)
@@ -114,25 +113,46 @@ var handler = {
     text: function (node, scope, exp) {
         bindWatcher(node, scope, exp, 'text')
     },
+    html: function (node, scope, exp) {
+        bindWatcher(node, scope, exp, 'html')
+    },
     // 属性指令 v-bind:id="id", v-bind:class="class"
     bind: function (node, scope, exp, attr) {
         switch (attr) {
-            case 'class':
-                bindClassDir(node, scope, exp)
-                break
-            case 'style':
-                bindStyleDir(node, scope, exp)
-                break
-            default:
-                bindWatcher(node, scope, exp, 'attr', attr)
-                break
+        case 'class':
+            bindClassDir(node, scope, exp)
+            break
+        case 'style':
+            bindStyleDir(node, scope, exp)
+            break
+        default:
+            bindWatcher(node, scope, exp, 'attr', attr)
+            break
+        }
+    },
+    on: function (node, scope, eventName, eventType) {
+        if (!eventType) {
+            error('v-bind 使用错误')
+            return
+        }
+        let fn = scope._events[eventName]
+        if (fn && isFun(fn)) {
+            node.addEventListener(eventType, fn.bind(scope))
+        } else {
+            /**
+             * @todo 解析绑定的表达式
+             */
+            error('未定义 ' + eventName + '方法')
         }
     }
 }
 
 var directives = {
     text: function (node, newVal, oldVal) {
-        node.textContent = isEmpty(newVal) ? '' : newVal
+        node.textContent = isEmpty(newVal) ? '' : newVal + ''
+    },
+    html: function (node, newVal, oldVal) {
+        node.innerHTML = isEmpty(newVal) ? '' : newVal
     },
     attr: function (node, newVal, oldVal, attrName) {
         node.setAttribute(attrName, isEmpty(newVal) ? '' : newVal)

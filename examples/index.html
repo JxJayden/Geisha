@@ -19,7 +19,8 @@
         <input type="" name="" value="" v-model="message">
         <div class="test" v-bind:class="active" v-bind:id="active">test bind</div>
         <span>{{ message }}</span>
-        <div v-text="message"></div>
+        <span v-text="message"></span>
+        <div v-html="test" v-on:click="testMethods"></div>
     </div>
     <script src="../bundle/geisha.js"></script>
     <script>
@@ -28,7 +29,14 @@
             data: {
                 message: 'test',
                 active: 'active',
+                test: '<span>test html</span>',
                 imgUrl: ''
+            },
+            methods: {
+                testMethods: function() {
+                    console.log('test methods sccess')
+                    this.$data.message = 'test methods'
+                }
             }
         })
     </script>

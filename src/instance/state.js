@@ -12,6 +12,7 @@ export default function (Geisha) {
         logS('begin initState')
 
         extend(this.$data, this.$options.data)
+        extend(this._events, this.$options.methods)
         observer(this.$data)
 
         logE()
